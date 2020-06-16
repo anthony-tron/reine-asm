@@ -18,12 +18,18 @@ SansConflit:		or $t0, $a0, $zero 				# $t0 : i2 = Ligne
 					add $t5, $t5, $t6 				# (calcul de l'adresse de la case courante)
 					lw $t5, 0($t5) 					# j1 = Colonne[k]
 					
-					# TODO ~
-					#    if ((i1 == i2)    // meme colonne
-					#        || (j1 == j2) // meme ligne
-					#        || ((i1 - j1) == (i2 - j2)) // meme diagonale
-					#        || ((i1 + j1) == (i2 + j2))) // meme diagonale
-					#      return false;
+					beq $t4, $t0, SC_ReturnFalse	# if (i1 == i2) return false;
+					#
+					beq $t5, $t1, SC_ReturnFalse 	# if (j1 == j2) return false;
+					#
+					sub $t7, $t4, $t5 # t7= i1 - j1
+					sub $t8, $t0, $t1 # t8= i2 - j2
+					beq $t7, $t8, SC_ReturnFalse 	# if (i1 - j1) == (i2 - j2) return false;
+					#
+					add $t7, $t4, $t5 # t7 = i1 -j1
+					add $t8, $t0, $t1 # t8 =  i2 - j2
+					beq $t7, $t8, SC_ReturnFalse	# if (i1 + j1) == (i2 + j2) return false;
+					
 					
 					addi $t2, $t2, 1  				# k++
 					j SC_For
@@ -34,13 +40,17 @@ SansConflit:		or $t0, $a0, $zero 				# $t0 : i2 = Ligne
 	SC_ReturnFalse: ori $v0, $zero, 0
 					jr $ra
 
+# # # # # # # # # # # # # # # # #
+# Fonction de base à traduire : #
+# # # # # # # # # # # # # # # # #
+#
 # bool SansConflit(const unsigned &Ligne, const unsigned &Coln) {
 #  unsigned i1, j1, i2 = Ligne, j2 = Coln;
-
+#
 #  for (unsigned k = 0; k < Ligne; ++k) {
 #    i1 = k;
 #    j1 = Colonne[k];
-
+#
 #    if ((i1 == i2)    // meme colonne
 #        || (j1 == j2) // meme ligne
 #        || ((i1 - j1) == (i2 - j2)) // meme diagonale
