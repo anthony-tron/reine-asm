@@ -1,7 +1,11 @@
 #include <iomanip>
 #include <iostream>
+
+
 using namespace std;
+
 namespace {
+
 const unsigned N = 8;
 unsigned SolutionNum = 0;
 unsigned Colonne[N];
