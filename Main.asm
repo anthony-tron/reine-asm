@@ -86,7 +86,8 @@ AS_Fin_For_j:
 	j AS_For_i
 
 AS_Fin_For_i:
-	# TODO:restaurer les valeurs de $a0 et $a1
+	or $a0,$t0,$zero		# restauration de $a0 ($t0 n’a pas été modifié)
+	or $a1,$t1,$zero		# restauration de $a1 ($t1 n’a pas été modifié)
 	jr $ra
 	
 	
