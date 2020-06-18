@@ -21,11 +21,7 @@ StrSetwDeux:
 
 # Main
 main:
-# chargement des valeurs pour le test
-	la $a0,Colonne
-	la $a1,N	
-	lw $a1,0($a1)
-	jal AfficherSolution
+	jal Reine			# appeel de Reine(void)
 	ori $v0,$zero,10 		# $v0 <− 10
 	syscall				# return 0
 
