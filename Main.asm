@@ -91,5 +91,27 @@ AS_Fin_For_i:
 	jr $ra
 	
 	
+Reine:
+	addi $sp,$sp,-8			# "allocation" de l’espace dans la pile
+	sw $ra,4($sp)			# sauvegarde de l’adresse de retour
+	sw $a0,0($sp)			# sauvegarde du registre d’argument qui va être modifié
+	or $a0,$zero,$zero		# passage de 0 en argument de ReineR
+	
+	jal ReineR			# appel de ReineR
+	
+	lw $ra,4($sp)			# on dépile $ra
+	lw $a0,0($sp)			# on dépile $a0
+	addi $sp,$sp,8			# on rend l’espace dans la pile
+	jr $ra				# retour de la fonction
+	
+
+
+
+
+
+
+
+
+	
 		
 
