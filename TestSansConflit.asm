@@ -2,28 +2,41 @@
 				.data
 Colonne:		.word 1, 2, 3, 4, 5, 6, 7, 1
 StrEspace:		.asciiz " "
+StrRetLigne:	.asciiz "\n"
 
 				.text
 				
 MainTest:		or $s0, $zero, $zero # i = 0
 				
 
-MT_For:			beq $s0, 8, MT_For
+MT_ForI:		beq $s0, 8, MT_Exit
 
-				ori $a0, $zero, 3
-				or $a1, $zero, $s0 # $a1 = i
-				jal SansConflit
+				or $s1, $zero, $zero # j = 0
+				
+  MT_ForJ:		beq $s1, 8, MT_ExitForJ
+
+				or $a0, $zero, $s0 # $a0 = i
+				or $a1, $zero, $s1 # $a1 = j
+				jal SansConflit    # $v0 = SansConflit(i, j)
 
 				or $a0, $zero, $v0 # entier à afficher : a0 (retour fct)
-				or $v0, $zero, 1 # je me prepare afficher un entier
+				or $v0, $zero, 1   # je me prepare afficher un entier
 				syscall # affichage
 				
-				ori $v0, $zero, 4 # je vais afficher un espace
-				la $a0, StrEspace # l'espace à afficher
+				ori $v0, $zero, 4  # je vais afficher un espace
+				la $a0, StrEspace  # l'espace à afficher
 				syscall # affichage
 				
+				addi $s1, $s1, 1   # ++j
+				j MT_ForJ
+				
+  MT_ExitForJ:	ori $v0, $zero, 4   # je vais aller à ligne
+				la $a0, StrRetLigne # le retour de ligne à afficher
+				syscall # affichage
+	
 				addi $s0, $s0, 1 # ++i
-				j MT_For
+	
+				j MT_ForI
 				
 MT_Exit:		ori $v0, $zero, 10
 				syscall # fin
