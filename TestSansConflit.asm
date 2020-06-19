@@ -1,21 +1,32 @@
-# Main
-			.data
-Colonne:	.word 6, 2, 3, 4, 5, 9, 4, 9
+# Test1
+				.data
+Colonne:		.word 1, 2, 3, 4, 5, 6, 7, 1
+StrEspace:		.asciiz " "
 
-			.text
-
-
-MainTest:		ori $a0, $zero, 8 # a0 = 1
-				ori $a1, $zero, 7 # a1 = 2
+				.text
 				
+MainTest:		or $s0, $zero, $zero # i = 0
+				
+
+MT_For:			beq $s0, 8, MT_For
+
+				ori $a0, $zero, 3
+				or $a1, $zero, $s0 # $a1 = i
 				jal SansConflit
 
 				or $a0, $zero, $v0 # entier à afficher : a0 (retour fct)
 				or $v0, $zero, 1 # je me prepare afficher un entier
-				syscall # j'affiche un entier
+				syscall # affichage
 				
-				ori $v0, $zero, 10
-				syscall # FinDuProgramme
+				ori $v0, $zero, 4 # je vais afficher un espace
+				la $a0, StrEspace # l'espace à afficher
+				syscall # affichage
+				
+				addi $s0, $s0, 1 # ++i
+				j MT_For
+				
+MT_Exit:		ori $v0, $zero, 10
+				syscall # fin
 
 
 
