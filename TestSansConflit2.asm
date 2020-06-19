@@ -1,6 +1,6 @@
 # Test1
 				.data
-Colonne:		.word 1, 2, 3, 4, 5, 6, 7, 1
+Colonne:		.word 7, 3, 0, 2, 5, 1, 6, 4
 StrEspace:		.asciiz " "
 StrRetLigne:	.asciiz "\n"
 
