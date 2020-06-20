@@ -102,7 +102,8 @@ Reine:
 
 
 
-ReineR;	addi $sp, $sp, -12		# alloue l’espace sur la pile
+ReineR:
+	addi $sp, $sp, -12		# alloue l’espace sur la pile
 	sw $s0,8($sp)			# empile $s0
 	sw $a0,4($sp)			# empile i 	
 	sw $ra,0($sp)			# empile adr. retour
@@ -115,6 +116,8 @@ RR_Else:				# else
 	or $s0,$zero,$zero		# k ($s0) <- 0
 	
 RR_For:	
+	la $t0,N			# on prend l’adresse de N
+	lw $t0,($t0)			# $t0 <− N
 	slt $t3,$s0,$t0			# $t3 <- k ($s0) < N ($t0)
 	beq $t3, $zero, RR_Retour	# si k < N est faux, on quitte la boucle for et la fonction
 	# $a0 est déjà égal à i, pas besoin de le charger
