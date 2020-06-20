@@ -4,5 +4,9 @@ Lien vers le sujet : https://pageperso.lis-lab.fr/vincent.risch/teaching/ARCHITE
 
 
 
+# notation des labels dans la fonction :
+<initiales de la fonction>_<label>
+
+
 # format de stockage du plateau
 Colonne[] enregistre la position de la reine, puisqu’il n’y en a q’une seule par colonne
