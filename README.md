@@ -26,7 +26,7 @@ Le tableau Colonne[] enregistre la position de la reine, puisqu’il n’y en a 
 
 ## Variables globales
 Nous avons décidé de mettre les 3 variables globales N, SolutionNum et Colonne dans la partie `.data` en tant que `.word` pour que chaque fonction puisse obtenir ces variables en chargeant une adresse mémoire définie par un label de cette façon : 
-```mips
+```asm
 	la $t0,N				# On prend l’adresse de N
 	lw $t0,($t0)			# $t0 a maintenant la valeur de N
 ```
@@ -64,7 +64,7 @@ if ((i1 + j1) == (i2 + j2)) return false; // D
 
 La traduction en assembleur MIPS est maintenant plus évidente :
 
-```mips
+```asm
 ...
 				beq $t4, $t0, SC_ReturnFalse	  #A if (i1 == i2) return false;
 
