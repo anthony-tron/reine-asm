@@ -1,4 +1,4 @@
-# reine-asm
+# Reine-asm
 
 Un projet en langage assembleur MIPS proposé par [Vincent Risch](https://pageperso.lis-lab.fr/vincent.risch/) d'[Aix-Marseille Université](https://www.univ-amu.fr/).
 
@@ -6,13 +6,33 @@ Réalisé par PONSARD Nils, TRON Anthony, et PATALANO Alexis.
 
 Lien vers le sujet : https://pageperso.lis-lab.fr/vincent.risch/teaching/ARCHITECTURE/projet2_Reines.pdf
 
-## Convention de nommage des labels pour traduire une  fonction
+## Organisation du groupe
+Le projet a été écrit à plusieurs grâce à git, chaque fonction a été écrite sur le même fichier mais sur des branches différentes puis nous avons *merge* toutes ces branches pour avoir le programme final,
+ce qui nous a permis de tous écrire du code en même temps sur des fonctions différentes.
 
-\<initiales de la fonction\>_\<label\>
+## Convention de nommage des labels pour traduire une  fonction
+Nous avons utilisé la convention de nommage suivante pour éviter d’avoir plusieurs fois le même label dans différentes fonctions : 
+```
+<initiales de la fonction>_<label>
+```
+Par exemple le label pour la boucle for dans `ReineR()` s’appelle 
+```
+RR_For
+```
 
 ## Format de stockage du plateau
 
 Le tableau Colonne[] enregistre la position de la reine, puisqu’il n’y en a qu’une seule par colonne.
+
+## Variables globales
+Nous avons décidé de mettre les 3 variables globales N, SolutionNum et Colonne dans la partie `.data` en tant que `.word` pour que chaque fonction puisse obtenir ces variables en chargeant une adresse mémoire définie par un label de cette façon : 
+```mips
+	la $t0,N				# On prend l’adresse de N
+	lw $t0,($t0)			# $t0 a maintenant la valeur de N
+```
+
+## Gestion des registres
+Nous avons fait en sorte que les registres temporaires (`$t0-$t9`) soient utiliser quand une variable n’a pas d’importance après l’appel d’une fonction ou quand il n’y a pas d’appel de fonction pour utiliser le moins de mémoire possible pour sauvegarder les registres.
 
 ## Vérifier que les fonctions font la même chose en C++ et en MIPS
 
@@ -44,7 +64,7 @@ if ((i1 + j1) == (i2 + j2)) return false; // D
 
 La traduction en assembleur MIPS est maintenant plus évidente :
 
-```asm
+```mips
 ...
 				beq $t4, $t0, SC_ReturnFalse	  #A if (i1 == i2) return false;
 
